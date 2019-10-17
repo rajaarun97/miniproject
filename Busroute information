@@ -1,0 +1,210 @@
+package busroute_identifier;
+
+import java.util.ArrayList;
+import java.awt.*;
+import java.awt.event.ItemListener;
+
+
+
+public class Bus {
+	String name ;
+	String number;
+	String time;
+	ArrayList<Stoping> stopings;
+	public Bus(String nam,String num,String time) {
+        		name=nam;
+        		number=num;
+        		time=time;
+        		stopings=new ArrayList<Stoping>();
+	}
+	
+	public void addStoping(String nam,int stu,String time)
+	{
+		Stoping s;
+			s=new Stoping(nam,stu,time);
+			stopings.add(s);
+	}
+	
+}
+-------------------------------------------------------------------------------------------------------------------------
+package busroute_identifier;
+
+import java.util.ArrayList;
+import java.awt.Frame;
+import java.awt.event.*;
+
+public class Stoping {
+	
+	public String name;
+	public int students;
+	public String time;
+
+	public Stoping(String na,int stu, String time)
+	{
+
+			name=na;
+			students=stu;
+			this.time=time;
+		
+	}
+
+}
+-------------------------------------------------------------------------------------------------------------------------------
+package busroute_identifier;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.ArrayList;
+
+public  class Window extends Frame implements WindowListener,ItemListener{
+	List l_list,r_list;
+	ArrayList<Bus> busses;
+	public Window() {		
+		super("Bus Route Information");
+		this.addWindowListener(this);
+		Bus b;
+		
+		busses=new ArrayList<Bus>();
+	
+		l_list=new List();
+		l_list.addItemListener(this);
+		
+		r_list=new List();
+		r_list.addItemListener(this);
+		
+		this.setLayout(new GridLayout(1, 2));
+		this.add(l_list);
+		this.add(r_list);
+		
+		b=new Bus("Tambaram","TN01 001","6.00am");
+		busses.add(b);
+		l_list.add("Tambaram");
+		
+		b.addStoping("Tambaram",10,"6.00am");
+		b.addStoping("Palavaram",2,"6.10am");
+		b.addStoping("Mangadu",4,"7.00am");
+		b.addStoping("Kumanachavadi",3,"7.10am");
+		b.addStoping("Poonamalle",2,"7.15am");
+		b.addStoping("Saveetha",0,"7.30am");
+		
+		
+		
+		
+		b=new Bus("Guindy","TN02 002","5.45am");
+		busses.add(b);		
+		l_list.add("Guindy");
+		b.addStoping("Guindy",4,"5.45am");
+		b.addStoping("Kathiparabridge",3,"6.00am");
+		b.addStoping("CTC",3,"6.15am");
+		b.addStoping("Nandhabakkam",2,"6.30am");
+		b.addStoping("Porur",4,"6.45am");
+		b.addStoping("Ramnagar",4,"7.00am");
+		b.addStoping("Saveetha",0,"7.45am");
+
+
+
+
+
+		b=new Bus("Egmore","TN02 003","5.00am");
+		busses.add(b);
+		l_list.add("Egmore");
+		b.addStoping("Egmore",6,"5.00am");
+		b.addStoping("Kilpauk",3,"5.30am");
+		b.addStoping("Skywalk",3,"6.00am");
+		b.addStoping("Arumbakkam",2,"6.30am");
+		b.addStoping("CMBT",4,"6.45am");
+		b.addStoping("Maduravoyal",4,"7.00am");
+		b.addStoping("Saveetha",0,"7.45am");
+
+		b=new Bus("Kanchipuram","TN02 004","6.30am");
+		busses.add(b);
+		l_list.add("Kanchipuram");
+		b.addStoping("Kanchipuram",6,"6.30am");
+		b.addStoping("Sungvachathiram",3,"7.10am");
+		b.addStoping("Sriperumandur",3,"7.18am");
+		b.addStoping("Sipcot",2,"7.22am");
+		b.addStoping("Tollgate",4,"7.28am");
+		b.addStoping("Thandalam",4,"7.32am");
+		b.addStoping("Saveetha",0,"7.45am");
+		
+		
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		System.exit(NORMAL);
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public static void main(String arg[])
+	{
+		
+		Window busdetails;
+		
+			busdetails=new Window();
+			
+			busdetails.setSize(500, 400);
+			busdetails.setVisible(true);
+
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+	String sel_bus;
+		sel_bus=l_list.getSelectedItem();
+		for(Bus i:busses)
+		{
+			if(i.name.contentEquals(sel_bus))
+			{
+				r_list.removeAll();
+				for(Stoping j:i.stopings)
+				{
+					r_list.add(j.name+":"+j.students+":"+j.time);
+				}
+				
+			}
+		}
+	}
+
+}
